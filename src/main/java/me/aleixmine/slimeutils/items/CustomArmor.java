@@ -7,6 +7,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -46,6 +47,7 @@ public class CustomArmor extends SlimefunItem {
         ItemStack item = this.getItem();
         item.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
         ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(UUID.randomUUID(), "generic.armor", this.amountArmor,
                 AttributeModifier.Operation.ADD_NUMBER, Transform(this.armor)));
         meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(UUID.randomUUID(),
