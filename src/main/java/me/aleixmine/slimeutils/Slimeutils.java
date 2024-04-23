@@ -10,6 +10,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
@@ -69,7 +70,7 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
     private void registerItems() {
         ItemGroup SLIMEUTILS = new ItemGroup(
                 new NamespacedKey(this, "slimeutils"),
-                new CustomItemStack(Material.SADDLE, "&6Miscellaneous", "", "&a> Click to open"));
+                new CustomItemStack(Material.SADDLE, "&5Utils", "", "&a> Click to open"));
 
         CustomArmor EMERALD_HELMET = new CustomArmor(SLIMEUTILS,
                 new SlimefunItemStack("EMERALD_HELMET",
@@ -92,5 +93,8 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
         EMERALD_CHESTPLATE.register(this, 9, 3, ArmorType.CHESTPLATE);
         EMERALD_LEGGINGS.register(this, 7, 3, ArmorType.LEGGINGS);
         EMERALD_BOOTS.register(this, 4, 3, ArmorType.BOOTS);
+
+        Research EMERALD_ARMOR = new Research(new NamespacedKey(this, "emerald_armor"), 1001, "&aEmerald Armor", 20);
+        EMERALD_ARMOR.addItems(EMERALD_HELMET,EMERALD_CHESTPLATE,EMERALD_LEGGINGS,EMERALD_BOOTS);
     }
 }
