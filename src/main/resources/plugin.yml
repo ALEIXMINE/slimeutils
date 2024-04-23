@@ -8,10 +8,10 @@ author: ALEIXMINE17
 description: A generic Slimefun4-Addon
 
 ## CHANGE this to the path of the class that extends JavaPlugin.
-main: me.aleixmine.slimeutils.SlimeUtils
+main: me.aleixmine.slimeutils.Slimeutils
 
 ## You can change this to link to your website or repository. You can also remove this line if you want to.
-website: https://github.com/ALEIXMINE/Slimeutils
+website: https://github.com/aleixmine/Slimeutils
 
 ## This value is automatically replaced by the version specified in your pom.xml file.
 ## Do not change this.

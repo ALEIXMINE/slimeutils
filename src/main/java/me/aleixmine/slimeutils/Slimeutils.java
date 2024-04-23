@@ -1,5 +1,6 @@
 package me.aleixmine.slimeutils;
 
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -28,10 +29,10 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
          * 1. Creating a new Category
          * This Category will use the following ItemStack
          */
-        ItemStack itemGroupItem = new CustomItemStack(Material.DIAMOND, "&4Addon Category", "", "&a> Click to open");
+        ItemStack itemGroupItem = new CustomItemStack(Material.SADDLE, "&6Miscellaneous", "", "&a> Click to open");
 
         // Give your Category a unique id.
-        NamespacedKey itemGroupId = new NamespacedKey(this, "addon_category");
+        NamespacedKey itemGroupId = new NamespacedKey(this, "slimeutils_category");
         ItemGroup itemGroup = new ItemGroup(itemGroupId, itemGroupItem);
 
         /*
@@ -39,7 +40,8 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
          * This class has many constructors, it is very important
          * that you give each item a unique id.
          */
-        SlimefunItemStack slimefunItem = new SlimefunItemStack("COOL_DIAMOND", Material.DIAMOND, "&4Cool Diamond", "&c+20% Coolness");
+        SlimefunItemStack slimefunItem = new SlimefunItemStack("EMERALD_HELMET", Material.LEATHER_HELMET, Color.GREEN,
+                "&aEmerald Helmet");
 
         /*
          * 3. Creating a Recipe
@@ -48,14 +50,17 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
          * The machine in which this recipe is crafted in is specified
          * further down as the RecipeType.
          */
-        ItemStack[] recipe = { new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.DIAMOND), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD) };
+        ItemStack[] recipe = { new ItemStack(Material.EMERALD), new ItemStack(Material.DIAMOND),
+                new ItemStack(Material.EMERALD),
+                new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null, null, null, };
 
         /*
          * 4. Registering the Item
          * Now you just have to register the item.
          * RecipeType.ENHANCED_CRAFTING_TABLE refers to the machine in
          * which this item is crafted in.
-         * Recipe Types from Slimefun itself will automatically add the recipe to that machine.
+         * Recipe Types from Slimefun itself will automatically add the recipe to that
+         * machine.
          */
         SlimefunItem item = new SlimefunItem(itemGroup, slimefunItem, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
         item.register(this);
