@@ -13,6 +13,9 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.updater.GitHubBuildsUpdater;
+import me.aleixmine.slimeutils.items.CustomArmor;
+import me.aleixmine.slimeutils.utils.ArmorType;
 
 public class Slimeutils extends JavaPlugin implements SlimefunAddon {
 
@@ -21,49 +24,12 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
         // Read something from your config.yml
         Config cfg = new Config(this);
 
-        if (cfg.getBoolean("options.auto-update")) {
-            // You could start an Auto-Updater for example
-        }
-
-        /*
-         * 1. Creating a new Category
-         * This Category will use the following ItemStack
-         */
-        ItemStack itemGroupItem = new CustomItemStack(Material.SADDLE, "&6Miscellaneous", "", "&a> Click to open");
-
-        // Give your Category a unique id.
-        NamespacedKey itemGroupId = new NamespacedKey(this, "slimeutils_category");
-        ItemGroup itemGroup = new ItemGroup(itemGroupId, itemGroupItem);
-
-        /*
-         * 2. Create a new SlimefunItemStack
-         * This class has many constructors, it is very important
-         * that you give each item a unique id.
-         */
-        SlimefunItemStack slimefunItem = new SlimefunItemStack("EMERALD_HELMET", Material.LEATHER_HELMET, Color.GREEN,
-                "&aEmerald Helmet");
-
-        /*
-         * 3. Creating a Recipe
-         * The Recipe is an ItemStack Array with a length of 9.
-         * It represents a Shaped Recipe in a 3x3 crafting grid.
-         * The machine in which this recipe is crafted in is specified
-         * further down as the RecipeType.
-         */
-        ItemStack[] recipe = { new ItemStack(Material.EMERALD), new ItemStack(Material.DIAMOND),
-                new ItemStack(Material.EMERALD),
-                new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null, null, null, };
-
-        /*
-         * 4. Registering the Item
-         * Now you just have to register the item.
-         * RecipeType.ENHANCED_CRAFTING_TABLE refers to the machine in
-         * which this item is crafted in.
-         * Recipe Types from Slimefun itself will automatically add the recipe to that
-         * machine.
-         */
-        SlimefunItem item = new SlimefunItem(itemGroup, slimefunItem, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
-        item.register(this);
+        // if (cfg.getBoolean("options.auto-update")) {
+        // // You could start an Auto-Updater for example
+        // new GitHubBuildsUpdater(this, getFile(),
+        // "aleixmine/Slimeutils/master").start();
+        // }
+        registerItems();
     }
 
     @Override
@@ -86,4 +52,45 @@ public class Slimeutils extends JavaPlugin implements SlimefunAddon {
         return this;
     }
 
+    public ItemStack[] ArmorRecipe(ArmorType armor, ItemStack item) {
+        if (armor == ArmorType.HELMET) {
+            return new ItemStack[] { item, item, item, item, null, item, null, null, null };
+        } else if (armor == ArmorType.CHESTPLATE) {
+            return new ItemStack[] { item, null, item, item, item, item, item, item, item };
+        } else if (armor == ArmorType.LEGGINGS) {
+            return new ItemStack[] { item, item, item, item, null, item, item, null, item };
+        } else if (armor == ArmorType.BOOTS) {
+            return new ItemStack[] { item, null, item, item, null, item, null, null, null };
+        } else {
+            return new ItemStack[] { null, null, null, null, item, null, null, null, null };
+        }
+    }
+
+    private void registerItems() {
+        ItemGroup SLIMEUTILS = new ItemGroup(
+                new NamespacedKey(this, "slimeutils"),
+                new CustomItemStack(Material.SADDLE, "&6Miscellaneous", "", "&a> Click to open"));
+
+        CustomArmor EMERALD_HELMET = new CustomArmor(SLIMEUTILS,
+                new SlimefunItemStack("EMERALD_HELMET",
+                        Material.LEATHER_HELMET, Color.GREEN, "&aEmerald Helmet"),
+                RecipeType.ENHANCED_CRAFTING_TABLE, ArmorRecipe(ArmorType.HELMET, new ItemStack(Material.EMERALD)));
+        CustomArmor EMERALD_CHESTPLATE = new CustomArmor(SLIMEUTILS,
+                new SlimefunItemStack("EMERALD_CHESPLATE",
+                        Material.LEATHER_CHESTPLATE, Color.GREEN, "&aEmerald Chestplate"),
+                RecipeType.ENHANCED_CRAFTING_TABLE, ArmorRecipe(ArmorType.CHESTPLATE, new ItemStack(Material.EMERALD)));
+        CustomArmor EMERALD_LEGGINGS = new CustomArmor(SLIMEUTILS,
+                new SlimefunItemStack("EMERALD_LEGGINGS",
+                        Material.LEATHER_LEGGINGS, Color.GREEN, "&aEmerald Leggings"),
+                RecipeType.ENHANCED_CRAFTING_TABLE, ArmorRecipe(ArmorType.LEGGINGS, new ItemStack(Material.EMERALD)));
+        CustomArmor EMERALD_BOOTS = new CustomArmor(SLIMEUTILS,
+                new SlimefunItemStack("EMERALD_BOOTS",
+                        Material.LEATHER_BOOTS, Color.GREEN, "&aEmerald Boots"),
+                RecipeType.ENHANCED_CRAFTING_TABLE, ArmorRecipe(ArmorType.BOOTS, new ItemStack(Material.EMERALD)));
+
+        EMERALD_HELMET.register(this, 4, 3, ArmorType.HELMET);
+        EMERALD_CHESTPLATE.register(this, 9, 3, ArmorType.CHESTPLATE);
+        EMERALD_LEGGINGS.register(this, 7, 3, ArmorType.LEGGINGS);
+        EMERALD_BOOTS.register(this, 4, 3, ArmorType.BOOTS);
+    }
 }
